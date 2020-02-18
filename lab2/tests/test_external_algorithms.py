@@ -1,4 +1,4 @@
-from ..external_algorithms import NumbersReader, NumbersWriter, external_merge, external_sort
+from sources.external_algorithms import NumbersReader, NumbersWriter, external_merge, external_sort
 
 from tempfile import TemporaryDirectory
 
