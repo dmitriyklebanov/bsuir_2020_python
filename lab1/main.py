@@ -10,6 +10,7 @@ def make_parser(parser):
     parser.add_argument('--output-file', type=str, default=None, help='path to output file')
 
     subparsers = parser.add_subparsers(dest='what')
+    subparsers.required = True
 
     text_processing = subparsers.add_parser('text_processing')
     text_processing.add_argument(
@@ -49,6 +50,8 @@ def main(args):
 
     elif args.what == 'fibonacci':
         res = list(fibonacci(int(text)))
+    elif args.what is None:
+        raise ValueError('what is not defined')
 
     if args.output_file is None:
         print(res)
