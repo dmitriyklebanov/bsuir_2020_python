@@ -1,4 +1,4 @@
-from ..fibonacci import fibonacci
+from sources.fibonacci import fibonacci
 
 
 class TestFibonacci:

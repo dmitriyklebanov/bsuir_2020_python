@@ -1,4 +1,4 @@
-from ..utils import find_id, partition, merge, copy
+from sources.utils import find_id, partition, merge, copy
 
 import pytest
 

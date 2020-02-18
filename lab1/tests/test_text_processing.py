@@ -1,4 +1,4 @@
-from ..text_processing import word_counter, most_common_words
+from sources.text_processing import word_counter, most_common_words
 
 from collections import Counter
 

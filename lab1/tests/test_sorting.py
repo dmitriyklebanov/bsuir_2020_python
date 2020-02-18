@@ -1,4 +1,4 @@
-from ..sorting import merge_sort, quick_sort
+from sources.sorting import merge_sort, quick_sort
 
 
 class TestMergeSort:
