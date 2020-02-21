@@ -1,11 +1,13 @@
-all: test build upload
+all: upload
 
 test:
 	pytest
 
-build:
+build: clean test
 	python setup.py sdist bdist_wheel
 
-upload:
+upload: build
 	twine upload --repository testpypi dist/*
 
+clean:
+	git clean -fdX

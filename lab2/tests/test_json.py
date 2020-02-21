@@ -161,7 +161,7 @@ class TestDeserializer:
             with pytest.raises(SyntaxError):
                 Deserializer.deserialize_none_type('kokoko')
 
-    class TestSerialize:
+    class TestDeSerialize:
         def test_different_types(self):
             assert Deserializer.deserialize('0')[0] == 0
             assert Deserializer.deserialize('false')[0] == False
