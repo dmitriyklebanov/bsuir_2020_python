@@ -1,4 +1,5 @@
-from sources.external_algorithms import NumbersReader, NumbersWriter, external_merge, external_sort
+from bsuir_2020_python.lab2.sources.external_algorithms import NumbersReader, NumbersWriter
+from bsuir_2020_python.lab2.sources.external_algorithms import external_merge, external_sort
 
 from tempfile import TemporaryDirectory
 

@@ -1,4 +1,4 @@
-from sources.sorting import merge_sort, quick_sort
+from bsuir_2020_python.lab1.sources.sorting import merge_sort, quick_sort
 
 
 class TestMergeSort:

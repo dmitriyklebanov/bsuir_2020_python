@@ -1,4 +1,7 @@
 **/__pycache__/**
 **/.pytest_cache/**
 **/.coverage
+bsuir_2020_python.egg-info/*
+build/*
+dist/*
 

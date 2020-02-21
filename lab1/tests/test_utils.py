@@ -1,4 +1,4 @@
-from sources.utils import find_id, partition, merge, copy
+from bsuir_2020_python.lab1.sources.utils import find_id, partition, merge, copy
 
 import pytest
 

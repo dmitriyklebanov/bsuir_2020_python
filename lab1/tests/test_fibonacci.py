@@ -1,4 +1,4 @@
-from sources.fibonacci import fibonacci
+from bsuir_2020_python.lab1.sources.fibonacci import fibonacci
 
 
 class TestFibonacci:
