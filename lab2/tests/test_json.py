@@ -81,10 +81,13 @@ class TestSerializer:
         def test_undefined_type(self):
             class SomeType:
                 def __init__(self):
-                    self.a = 0
+                    self.__a = 42
+                    self._b = 3.14
+                    self.c = 'kokoko'
 
-            with pytest.raises(TypeError):
-                Serializer.serialize(SomeType())
+            res = Serializer.serialize(SomeType())
+            ans = '{"_SomeType__a": 42, "_b": 3.14, "c": "kokoko"}'
+            assert res == ans
 
 
 class TestDeserializer:
@@ -183,3 +186,31 @@ class TestDeserializer:
         def test_undefined_type(self):
             with pytest.raises(SyntaxError):
                 Deserializer.deserialize('kokoko')
+
+        def test_custom_type(self):
+            class SomeType:
+                def __init__(self):
+                    self.__a = 0
+                    self._b = 0
+                    self.c = 0
+
+                @property
+                def get_a(self):
+                    return self.__a
+
+                @property
+                def get_b(self):
+                    return self._b
+
+                @property
+                def get_c(self):
+                    return self.c
+
+            string = '{"_SomeType__a": 42, "_b": 3.14, "c": "kokoko"}'
+            obj = SomeType()
+            res = Deserializer.deserialize(string, obj=obj)
+            ans = {'_SomeType__a': 42, '_b': 3.14, 'c': 'kokoko'}
+            assert res[0] == ans
+            assert obj.get_a == 42
+            assert obj.get_b == 3.14
+            assert obj.get_c == 'kokoko'

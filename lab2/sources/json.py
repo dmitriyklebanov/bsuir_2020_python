@@ -1,3 +1,4 @@
+from copy import deepcopy
 from math import isnan, isinf
 
 
@@ -84,7 +85,7 @@ class Serializer:
         if type(obj) in Serializer.__serializable_objects:
             return Serializer.__serializable_objects[type(obj)](obj)
         else:
-            raise TypeError('can\'t serialize')
+            return Serializer.serialize_dict(obj.__dict__)
 
     __serializable_objects = {
         dict: serialize_dict,
@@ -231,18 +232,24 @@ class Deserializer:
             raise SyntaxError(f'expected null, but found {cur_string}')
         return None, pos
 
-    def deserialize(string, pos=0):
-        '''Return deserialized object to json.
+    def deserialize(string, pos=0, obj=None):
+        '''Return deserialized object to json. If obj is defined, also deserializes it.
         Also return position in string after the last character of the deserialized object.
 
         Supports default types.
         '''
+
         pos = Deserializer.remove_whitespaces(string, pos)
         Deserializer.__validate_length(string, pos)
-        for marker, func in Deserializer.__objects_markers.items():
-            if string[pos] in marker:
-                return func(string, pos)
-        raise SyntaxError(f'can\'t deserialize, first characters: {string[pos:pos + 10]}')
+        if obj is not None:
+            res = Deserializer.deserialize_dict(string, pos)
+            obj.__dict__ = deepcopy(res[0])
+            return res
+        else:
+            for marker, func in Deserializer.__objects_markers.items():
+                if string[pos] in marker:
+                    return func(string, pos)
+            raise SyntaxError(f'can\'t deserialize, first characters: {string[pos:pos + 10]}')
 
     __objects_markers = {
         '{': deserialize_dict,
