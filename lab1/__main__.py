@@ -1,6 +1,6 @@
-from sources.fibonacci import fibonacci
-from sources.sorting import merge_sort, quick_sort
-from sources.text_processing import word_counter, most_common_words
+from lab1.sources.fibonacci import fibonacci
+from lab1.sources.sorting import merge_sort, quick_sort
+from lab1.sources.text_processing import word_counter, most_common_words
 
 import argparse
 

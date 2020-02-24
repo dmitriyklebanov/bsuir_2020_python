@@ -1,4 +1,4 @@
-from bsuir_2020_python.lab2.sources.cached import cached
+from lab2.sources.cached import cached
 
 import pytest
 import random

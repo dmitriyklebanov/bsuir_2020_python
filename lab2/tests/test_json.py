@@ -1,4 +1,4 @@
-from bsuir_2020_python.lab2.sources.json import Serializer, Deserializer
+from lab2.sources.json import Serializer, Deserializer
 
 import pytest
 

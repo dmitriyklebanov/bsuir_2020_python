@@ -1,4 +1,4 @@
-from bsuir_2020_python.lab2.sources.vector import Vector
+from lab2.sources.vector import Vector
 
 import pytest
 

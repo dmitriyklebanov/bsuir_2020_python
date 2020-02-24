@@ -1,4 +1,4 @@
-from bsuir_2020_python.lab2.sources.singleton import Singleton
+from lab2.sources.singleton import Singleton
 
 
 @Singleton
