@@ -3,16 +3,11 @@ def Singleton(cls):
     '''
 
     class Wrapper:
-        instance = None
+        __instance = None
 
-        def __init__(self, *args, **kwargs):
-            if not Wrapper.instance:
-                Wrapper.instance = cls(*args, **kwargs)
-
-        def __getattr__(self, name):
-            return getattr(Wrapper.instance, name)
-
-        def __setattr__(self, name, *args, **kwargs):
-            return setattr(Wrapper.instance, name, *args, **kwargs)
+        def get_instance(*args, **kwargs):
+            if not Wrapper.__instance:
+                Wrapper.__instance = cls(*args, **kwargs)
+            return Wrapper.__instance
 
     return Wrapper

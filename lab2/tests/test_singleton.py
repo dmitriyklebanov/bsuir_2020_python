@@ -9,11 +9,12 @@ class SomeClass:
 
 class TestSingleton:
     def test_simple(self):
-        a = SomeClass(4)
-        b = SomeClass(5)
+        a = SomeClass.get_instance(4)
+        b = SomeClass.get_instance(5)
+        assert a is b
         assert a.val == b.val == 4
 
     def test_access(self):
-        a = SomeClass(4)
+        a = SomeClass.get_instance(4)
         a.val = 5
         assert a.val == 5
