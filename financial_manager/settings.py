@@ -74,10 +74,20 @@ WSGI_APPLICATION = 'financial_manager.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+# def load_from_file(filename):
+#     from json import loads
+#     return loads(open(filename, 'r').read())
+
+
+# DATABASES = load_from_file(os.path.join(BASE_DIR, 'configs', 'databases.cfg'))
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'financial_manager',
+        'USER': 'financial_manager_user',
+        'PASSWORD': 'financial_manager_user',
+        'HOST': 'localhost'
     }
 }
 
