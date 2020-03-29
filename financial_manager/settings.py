@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'financial_manager.wsgi.application'
 #     return loads(open(filename, 'r').read())
 
 
-# DATABASES = load_from_file(os.path.join(BASE_DIR, 'configs', 'databases.cfg'))
+# DATABASES = load_from_file(os.path.join('configs', 'databases.cfg'))
 
 DATABASES = {
     'default': {
