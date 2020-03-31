@@ -146,6 +146,6 @@ MEDIA_DEFAULT = 'default'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-LOGIN_REDIRECT_URL = 'about'
+LOGIN_REDIRECT_URL = 'profile'
 
 LOGIN_URL = 'login'
