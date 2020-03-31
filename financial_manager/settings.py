@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'crispy_forms',
+    'phone_field',
 
     'pages.apps.PagesConfig',
     'users.apps.UsersConfig',
