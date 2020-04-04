@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import socket
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -149,3 +150,11 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = 'profile'
 
 LOGIN_URL = 'login'
+
+EMAIL_BACKED = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = socket.gethostbyname('smtp.gmail.com')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.environ.get('FM_EMAIL_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('FM_EMAIL_PASSWORD')
+
