@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'crispy_forms',
+    'django_registration',
     'phone_field',
 
     'pages.apps.PagesConfig',
@@ -158,3 +159,4 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get('FM_EMAIL_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('FM_EMAIL_PASSWORD')
 
+ACCOUNT_ACTIVATION_DAYS = 2
