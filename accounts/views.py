@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import redirect, render
 
-from users.forms import UserUpdateForm, ProfileUpdateForm
+from accounts.forms import UserUpdateForm, ProfileUpdateForm
 
 
 @login_required
@@ -26,4 +26,4 @@ def profile(request):
         'u_form': u_form,
         'p_form': p_form,
     }
-    return render(request, 'users/profile.html', context)
+    return render(request, 'accounts/profile.html', context)

@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.forms import DateField
 
-from users.models import Profile
+from accounts.models import Profile
 
 
 class UserUpdateForm(forms.ModelForm):

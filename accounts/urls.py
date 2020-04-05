@@ -4,58 +4,58 @@ from django.urls import path, include, reverse_lazy
 from django.views.generic.base import TemplateView
 
 from django_registration.backends.activation import views as registration_views
-from users import views as users_views
+from accounts import views as users_views
 
 urlpatterns = [
     path('profile/', users_views.profile, name='profile'),
 
     path('registration/register/',
          registration_views.RegistrationView.as_view(
-             template_name='users/registration/register.html',
-             email_body_template='users/registration/activation_email/body.txt',
-             email_subject_template='users/registration/activation_email/subject.txt',
+             template_name='accounts/registration/register.html',
+             email_body_template='accounts/registration/activation_email/body.txt',
+             email_subject_template='accounts/registration/activation_email/subject.txt',
              success_url=reverse_lazy("registration_complete"),
              disallowed_url=reverse_lazy("registration_disallowed"),
          ),
          name='registration_register'),
 
     path('registration/complete/',
-         TemplateView.as_view(template_name='users/registration/complete.html'),
+         TemplateView.as_view(template_name='accounts/registration/complete.html'),
          name='registration_complete'),
 
     path('registration/closed/',
-         TemplateView.as_view(template_name='users/registration/closed.html'),
+         TemplateView.as_view(template_name='accounts/registration/closed.html'),
          name='registration_disallowed'),
 
     path('registration/activate/<str:activation_key>/',
          registration_views.ActivationView.as_view(
-             template_name='users/registration/activation_failed.html',
+             template_name='accounts/registration/activation_failed.html',
              success_url=reverse_lazy("registration_activation_complete")
          ),
          name='registration_activate'),
 
     path('registration/activation/complete/',
-         TemplateView.as_view(template_name='users/registration/activation_complete.html'),
+         TemplateView.as_view(template_name='accounts/registration/activation_complete.html'),
          name='registration_activation_complete'),
 
 
-    path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
+    path('login/', auth_views.LoginView.as_view(template_name='accounts/login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(template_name='accounts/logout.html'), name='logout'),
 
 
     path('password-reset/request/',
-         auth_views.PasswordResetView.as_view(template_name='users/password_reset/request.html'),
+         auth_views.PasswordResetView.as_view(template_name='accounts/password_reset/request.html'),
          name='password_reset_request'),
 
     path('password-reset/done/',
-         auth_views.PasswordResetDoneView.as_view(template_name='users/password_reset/done.html'),
+         auth_views.PasswordResetDoneView.as_view(template_name='accounts/password_reset/done.html'),
          name='password_reset_done'),
 
     path('password-reset/complete/',
-         auth_views.PasswordResetCompleteView.as_view(template_name='users/password_reset/complete.html'),
+         auth_views.PasswordResetCompleteView.as_view(template_name='accounts/password_reset/complete.html'),
          name='password_reset_complete'),
 
     path('password-reset/confirm/<uidb64>/<token>/',
-         auth_views.PasswordResetConfirmView.as_view(template_name='users/password_reset/confirm.html'),
+         auth_views.PasswordResetConfirmView.as_view(template_name='accounts/password_reset/confirm.html'),
          name='password_reset_confirm'),
 ]

@@ -43,8 +43,8 @@ INSTALLED_APPS = [
     'django_registration',
     'phone_field',
 
+    'accounts.apps.AccountsConfig',
     'pages.apps.PagesConfig',
-    'users.apps.UsersConfig',
 ]
 
 MIDDLEWARE = [
