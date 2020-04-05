@@ -13,7 +13,6 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     phone_number = PhoneField(blank=True)
-    bio = models.TextField(max_length=500, blank=True)
     birth_date = models.DateField(
         null=True,
         blank=True,
@@ -24,7 +23,7 @@ class Profile(models.Model):
         upload_to='profile_pics')
 
     def __str__(self):
-        return f'{self.user.username} Profile'
+        return f'{self.user.username}_profile'
 
     def save(self, **kwargs):
         super().save()
