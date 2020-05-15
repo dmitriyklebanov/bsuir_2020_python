@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'phone_field',
 
     'accounts.apps.AccountsConfig',
+    'finance.apps.FinanceConfig',
     'pages.apps.PagesConfig',
 ]
 
