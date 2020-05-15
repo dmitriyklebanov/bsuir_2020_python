@@ -13,10 +13,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     phone_number = PhoneField(blank=True)
-    birth_date = models.DateField(
-        null=True,
-        blank=True,
-        help_text="Please use the following format: <em>YYYY-MM-DD</em>.")
+    birth_date = models.DateField(null=True, blank=True)
 
     image = models.ImageField(
         default=os.path.join(MEDIA_DEFAULT, 'profile_image.jpg'),

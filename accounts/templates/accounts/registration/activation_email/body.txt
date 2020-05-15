@@ -4,7 +4,7 @@ Please, activate your account in order to complete registration.
 The number of days remaining during which the account may be activated is {{ expiration_days }}.
 
 Activation link:
-{{ site }}/registration/activate/{{ activation_key }}/
+{{ site }}/account/registration/activate/{{ activation_key }}/
 
 
 Thank you!
