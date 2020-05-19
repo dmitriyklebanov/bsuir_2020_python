@@ -161,3 +161,5 @@ EMAIL_HOST_USER = os.environ.get('FM_EMAIL_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('FM_EMAIL_PASSWORD')
 
 ACCOUNT_ACTIVATION_DAYS = 2
+ACTIVATION_EMAIL_BODY = 'accounts/registration/activation_email/body.txt'
+ACTIVATION_EMAIL_SUBJECT = 'accounts/registration/activation_email/subject.txt'

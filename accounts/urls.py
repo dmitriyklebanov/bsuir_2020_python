@@ -5,6 +5,7 @@ from django.views.generic.base import TemplateView
 
 from django_registration.backends.activation import views as registration_views
 from accounts import views as users_views
+from financial_manager import settings
 
 urlpatterns = [
     path('profile/', users_views.profile, name='profile'),
@@ -12,8 +13,8 @@ urlpatterns = [
     path('registration/register/',
          registration_views.RegistrationView.as_view(
              template_name='accounts/registration/register.html',
-             email_body_template='accounts/registration/activation_email/body.txt',
-             email_subject_template='accounts/registration/activation_email/subject.txt',
+             email_body_template=settings.ACTIVATION_EMAIL_BODY,
+             email_subject_template=settings.ACTIVATION_EMAIL_SUBJECT,
              success_url=reverse_lazy("registration_complete"),
              disallowed_url=reverse_lazy("registration_disallowed"),
          ),
