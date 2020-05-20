@@ -24,3 +24,11 @@ class Balance(models.Model):
 
     def get_absolute_url(self):
         return reverse('balance_detail', kwargs={'pk': self.pk})
+
+
+class Expense(models.Model):
+    account = models.ForeignKey(User, on_delete=models.CASCADE, related_name='expense')
+    name = models.CharField(max_length=30)
+
+    def __str__(self):
+        return f'{self.account.username}_{self.name}'

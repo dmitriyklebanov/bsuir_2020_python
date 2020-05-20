@@ -12,7 +12,7 @@ from finance.views import BalancesListView, BalanceDetailView
 @pytest.mark.django_db
 class TestListView:
     def test_balance_list_view(self):
-        url = reverse('balances')
+        url = reverse('balance_list')
 
         request = RequestFactory().get(url)
         user = User.objects.create(username='tmp', email='tmp@example.com')

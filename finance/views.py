@@ -8,8 +8,6 @@ from finance.models import Balance
 
 class BalancesListView(LoginRequiredMixin, ListView):
     model = Balance
-    template_name = 'finance/balances.html'
-    context_object_name = 'balances'
 
     def get_queryset(self):
         return self.model.objects.filter(account=self.request.user)

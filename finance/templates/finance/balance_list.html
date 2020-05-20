@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-    {% for balance in balances %}
+    {% for balance in balance_list %}
         <article class="content-section">
           <div>
             <h2><a href="{% url 'balance_detail' balance.id %}">{{ balance.name }}</a></h2>
