@@ -32,3 +32,6 @@ class Expense(models.Model):
 
     def __str__(self):
         return f'{self.account.username}_{self.name}'
+
+    def get_absolute_url(self):
+        return reverse('expense_detail', kwargs={'pk': self.pk})
