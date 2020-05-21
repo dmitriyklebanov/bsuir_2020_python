@@ -29,7 +29,6 @@ class Balance(models.Model):
 class Expense(models.Model):
     account = models.ForeignKey(User, on_delete=models.CASCADE, related_name='expense')
     name = models.CharField(max_length=30, unique=True)
-    amount = models.FloatField(validators=[MinValueValidator(0)], default=0)
 
     def __str__(self):
         return f'{self.account.username}_{self.name}'
@@ -41,10 +40,6 @@ class Expense(models.Model):
         return Expense.objects.get_or_create(account=self.account, name='other')[0]
 
     def delete(self):
-        obj = self.get_default()
-        obj.amount += self.amount
-        obj.save()
-
         payments = Payment.objects.filter(expense=self)
         for payment in payments:
             payment.expense = self.get_default()
@@ -62,11 +57,6 @@ class Payment(models.Model):
         MaxValueValidator(Balance.MAX_VALUE), MinValueValidator(0)])
     balance = models.ForeignKey(Balance, on_delete=models.CASCADE, related_name='payment')
     expense = models.ForeignKey(Expense, on_delete=models.DO_NOTHING, related_name='payment')
-
-    def delete(self):
-        self.expense.amount -= self.amount
-        self.expense.amount.save()
-        super().delete()
 
     def __str__(self):
         return f'{self.account.username}_{self.pk}'
