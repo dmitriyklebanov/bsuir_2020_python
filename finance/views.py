@@ -3,7 +3,8 @@ from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
-from finance.models import Balance, Expense
+from finance.forms import PaymentForm
+from finance.models import Balance, Expense, Payment
 
 
 class UsersCreateView(LoginRequiredMixin, CreateView):
@@ -105,3 +106,39 @@ class ExpenseUpdateView(UsersUpdateView):
 class ExpenseDeleteView(UsersDeleteView):
     model = Expense
     success_url = reverse_lazy('expense_list')
+
+
+class PaymentListView(UsersListView):
+    model = Payment
+
+    def get_queryset(self):
+        return super().get_queryset().order_by('-datetime')
+
+
+class PaymentCreateView(UsersCreateView):
+    model = Payment
+    form_class = PaymentForm
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
+
+    def form_valid(self, form):
+        form.instance.balance.amount -= form.instance.amount
+        form.instance.balance.save()
+        return super().form_valid(form)
+
+
+class PaymentDetailView(UsersDetailView):
+    model = Payment
+
+
+class PaymentUpdateView(UsersUpdateView):
+    model = Payment
+    fields = ['title', 'description', 'expense']
+
+
+class PaymentDeleteView(UsersDeleteView):
+    model = Payment
+    success_url = reverse_lazy('payment_list')

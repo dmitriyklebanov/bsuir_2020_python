@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.urls import reverse
+from django.utils import timezone
 
 
 class Balance(models.Model):
@@ -52,7 +53,8 @@ class Payment(models.Model):
     account = models.ForeignKey(User, on_delete=models.CASCADE, related_name='payment')
 
     title = models.CharField(max_length=30)
-    description = models.CharField(max_length=500)
+    description = models.TextField(blank=True)
+    datetime = models.DateTimeField(default=timezone.now)
     amount = models.FloatField(validators=[
         MaxValueValidator(Balance.MAX_VALUE), MinValueValidator(0)])
     balance = models.ForeignKey(Balance, on_delete=models.CASCADE, related_name='payment')
@@ -60,3 +62,11 @@ class Payment(models.Model):
 
     def __str__(self):
         return f'{self.account.username}_{self.pk}'
+
+    def delete(self):
+        self.balance.amount = min(Balance.MAX_VALUE, self.balance.amount + self.amount)
+        self.balance.save()
+        super().delete()
+
+    def get_absolute_url(self):
+        return reverse('payment_detail', kwargs={'pk': self.pk})
