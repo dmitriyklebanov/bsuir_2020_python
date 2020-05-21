@@ -74,6 +74,11 @@ class BalanceCreateView(UsersCreateView):
 class BalanceDetailView(UsersDetailView):
     model = Balance
 
+    def get_context_data(self, **kwargs):
+        res = super().get_context_data(**kwargs)
+        res['payment_list'] = Payment.objects.filter(balance=res['object']).order_by('-datetime')
+        return res
+
 
 class BalanceUpdateView(UsersUpdateView):
     model = Balance
@@ -96,6 +101,11 @@ class ExpenseCreateView(UsersCreateView):
 
 class ExpenseDetailView(UsersDetailView):
     model = Expense
+
+    def get_context_data(self, **kwargs):
+        res = super().get_context_data(**kwargs)
+        res['payment_list'] = Payment.objects.filter(expense=res['object']).order_by('-datetime')
+        return res
 
 
 class ExpenseUpdateView(UsersUpdateView):
