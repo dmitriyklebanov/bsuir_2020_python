@@ -14,7 +14,7 @@ class UsersCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
-        res = super(CreateView, self).get_context_data(**kwargs)
+        res = super().get_context_data(**kwargs)
         res['name'] = self.model._meta.model_name.capitalize()
         return res
 
@@ -26,7 +26,7 @@ class UsersListView(LoginRequiredMixin, ListView):
 
 class UsersDetailView(LoginRequiredMixin, DetailView):
     def get_object(self):
-        obj = super(DetailView, self).get_object()
+        obj = super().get_object()
         if obj.account != self.request.user:
             raise PermissionDenied
         return obj
@@ -43,7 +43,7 @@ class UsersUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return self.get_object().account == self.request.user
 
     def get_context_data(self, **kwargs):
-        res = super(UpdateView, self).get_context_data(**kwargs)
+        res = super().get_context_data(**kwargs)
         res['name'] = self.model._meta.model_name.capitalize()
         return res
 
@@ -55,7 +55,7 @@ class UsersDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return self.get_object().account == self.request.user
 
     def get_context_data(self, **kwargs):
-        res = super(DeleteView, self).get_context_data(**kwargs)
+        res = super().get_context_data(**kwargs)
         res['name'] = self.model._meta.model_name
         res['detail_url'] = self.model._meta.model_name + '_detail'
         return res
