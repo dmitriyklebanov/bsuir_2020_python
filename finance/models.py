@@ -67,3 +67,6 @@ class Payment(models.Model):
         self.expense.amount -= self.amount
         self.expense.amount.save()
         super().delete()
+
+    def __str__(self):
+        return f'{self.account.username}_{self.pk}'
