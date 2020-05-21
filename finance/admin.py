@@ -3,19 +3,19 @@ from django.contrib import admin
 from finance.models import Balance, Expense, Payment
 
 admin.site.register(Balance)
-admin.site.register(Payment)
+admin.site.register(Expense)
 
 
-def safe_delete_expenses(_, request, queryset):
-    for expense in queryset:
-        expense.delete()
+def safe_delete_payments(_, request, queryset):
+    for payment in queryset:
+        payment.delete()
 
 
-safe_delete_expenses.short_description = 'Safe delete selected expenses'
+safe_delete_payments.short_description = 'Safe delete selected payments'
 
 
-class ExpenseAdmin(admin.ModelAdmin):
-    actions = [safe_delete_expenses, ]
+class PaymentAdmin(admin.ModelAdmin):
+    actions = [safe_delete_payments, ]
 
 
-admin.site.register(Expense, ExpenseAdmin)
+admin.site.register(Payment, PaymentAdmin)
