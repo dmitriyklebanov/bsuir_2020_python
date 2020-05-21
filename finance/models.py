@@ -45,7 +45,7 @@ class Expense(models.Model):
         obj.amount += self.amount
         obj.save()
 
-        payments = Payment.objects.get(expense=self)
+        payments = Payment.objects.filter(expense=self)
         for payment in payments:
             payment.expense = self.get_default()
             payment.save()
