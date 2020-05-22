@@ -9,8 +9,7 @@ class Balance(models.Model):
     CURRENCY_CHOICES = [
         ('USD', 'United States Dollar'),
         ('EUR', 'Euro'),
-        ('BYN', 'Belarusian Ruble'),
-        ('RUS', 'Russian Ruble'),
+        ('RUB', 'Russian Ruble'),
     ]
 
     MAX_VALUE = 999999999999999
@@ -70,3 +69,18 @@ class Payment(models.Model):
 
     def get_absolute_url(self):
         return reverse('payment_detail', kwargs={'pk': self.pk})
+
+
+class Transfer(models.Model):
+    account = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    datetime = models.DateTimeField(default=timezone.now)
+    amount = models.FloatField(validators=[
+        MaxValueValidator(Balance.MAX_VALUE), MinValueValidator(0)])
+    coef = models.FloatField(validators=[
+        MaxValueValidator(Balance.MAX_VALUE), MinValueValidator(0)])
+    from_balance = models.ForeignKey(Balance, on_delete=models.CASCADE, related_name='from_balance')
+    to_balance = models.ForeignKey(Balance, on_delete=models.CASCADE, related_name='to_balance')
+
+    def __str__(self):
+        return f'{self.account.username}_{self.pk}'

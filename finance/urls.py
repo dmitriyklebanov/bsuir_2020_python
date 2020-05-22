@@ -6,6 +6,7 @@ from .views import (
     ExpenseDetailView, ExpenseUpdateView, ExpenseDeleteView,
     PaymentListView, PaymentCreateView,
     PaymentDetailView, PaymentUpdateView, PaymentDeleteView,
+    TransferListView, TransferCreateView, TransferCurrencyChooser
 )
 
 urlpatterns = [
@@ -26,4 +27,8 @@ urlpatterns = [
     path('payment/<int:pk>/', PaymentDetailView.as_view(), name='payment_detail'),
     path('payment/<int:pk>/update/', PaymentUpdateView.as_view(), name='payment_update'),
     path('payment/<int:pk>/delete/', PaymentDeleteView.as_view(), name='payment_delete'),
+
+    path('transfer/list/', TransferListView.as_view(), name='transfer_list'),
+    path('transfer/create/', TransferCurrencyChooser.as_view(), name='transfer_create'),
+    path('transfer/create/<str:from>/<str:to>/', TransferCreateView.as_view(), name='transfer_create_from_to'),
 ]

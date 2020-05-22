@@ -1,10 +1,16 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib import messages
 from django.core.exceptions import PermissionDenied
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import (
+    ListView, DetailView, CreateView, UpdateView, DeleteView, FormView
+)
 
-from finance.forms import PaymentForm
-from finance.models import Balance, Expense, Payment
+from finance.forms import PaymentForm, TransferForm, CurrencyChooseForm
+from finance.models import Balance, Expense, Payment, Transfer
+
+from .currency import get_currency_rate
 
 
 class UsersCreateView(LoginRequiredMixin, CreateView):
@@ -23,6 +29,11 @@ class UsersCreateView(LoginRequiredMixin, CreateView):
 class UsersListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return self.model.objects.filter(account=self.request.user)
+
+
+class OrderedUsersListView(UsersListView):
+    def get_queryset(self):
+        return super().get_queryset().order_by('-datetime')
 
 
 class UsersDetailView(LoginRequiredMixin, DetailView):
@@ -118,11 +129,8 @@ class ExpenseDeleteView(UsersDeleteView):
     success_url = reverse_lazy('expense_list')
 
 
-class PaymentListView(UsersListView):
+class PaymentListView(OrderedUsersListView):
     model = Payment
-
-    def get_queryset(self):
-        return super().get_queryset().order_by('-datetime')
 
 
 class PaymentCreateView(UsersCreateView):
@@ -152,3 +160,56 @@ class PaymentUpdateView(UsersUpdateView):
 class PaymentDeleteView(UsersDeleteView):
     model = Payment
     success_url = reverse_lazy('payment_list')
+
+
+class TransferListView(OrderedUsersListView):
+    model = Transfer
+
+
+class TransferCreateView(UsersCreateView):
+    model = Transfer
+    form_class = TransferForm
+    success_url = reverse_lazy('transfer_list')
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        kwargs.update({'from_str': self.kwargs['from']})
+        kwargs.update({'to_str': self.kwargs['to']})
+        return kwargs
+
+    def get(self, request, *args, **kwargs):
+        from_str = kwargs.get('from')
+        to_str = kwargs.get('to')
+        if from_str != to_str:
+            coef = get_currency_rate(from_str, to_str)
+            msg = f'Exchange rate from {kwargs.get("from")} to {kwargs.get("to")} is {coef}!'
+            messages.warning(request, msg)
+        return super().get(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        from_balance = form.instance.from_balance
+        to_balance = form.instance.to_balance
+        form.instance.coef = get_currency_rate(from_balance.currency, to_balance.currency)
+        from_balance.amount -= form.instance.amount * form.instance.coef
+        from_balance.save()
+        to_balance.amount += form.instance.amount * form.instance.coef
+        to_balance.save()
+        return super().form_valid(form)
+
+
+class TransferCurrencyChooser(FormView):
+    form_class = CurrencyChooseForm
+    template_name = 'finance/form.html'
+
+    def get_context_data(self, **kwargs):
+        res = super().get_context_data(**kwargs)
+        res['name'] = 'Choose currencies'
+        return res
+
+    def form_valid(self, form):
+        return redirect(
+            'transfer_create_from_to',
+            form.data['from_currency'],
+            form.data['to_currency']
+        )
