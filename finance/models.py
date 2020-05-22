@@ -15,7 +15,7 @@ class Balance(models.Model):
 
     MAX_VALUE = 999999999999999
 
-    account = models.ForeignKey(User, on_delete=models.CASCADE, related_name='balance')
+    account = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=30, unique=True)
     amount = models.FloatField(validators=[MaxValueValidator(MAX_VALUE), MinValueValidator(0)])
     currency = models.CharField(max_length=5, default='USD', choices=CURRENCY_CHOICES)
@@ -28,7 +28,7 @@ class Balance(models.Model):
 
 
 class Expense(models.Model):
-    account = models.ForeignKey(User, on_delete=models.CASCADE, related_name='expense')
+    account = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=30, unique=True)
 
     def __str__(self):
@@ -50,15 +50,15 @@ class Expense(models.Model):
 
 
 class Payment(models.Model):
-    account = models.ForeignKey(User, on_delete=models.CASCADE, related_name='payment')
+    account = models.ForeignKey(User, on_delete=models.CASCADE)
 
     title = models.CharField(max_length=30)
     description = models.TextField(blank=True)
     datetime = models.DateTimeField(default=timezone.now)
     amount = models.FloatField(validators=[
         MaxValueValidator(Balance.MAX_VALUE), MinValueValidator(0)])
-    balance = models.ForeignKey(Balance, on_delete=models.CASCADE, related_name='payment')
-    expense = models.ForeignKey(Expense, on_delete=models.DO_NOTHING, related_name='payment')
+    balance = models.ForeignKey(Balance, on_delete=models.CASCADE)
+    expense = models.ForeignKey(Expense, on_delete=models.DO_NOTHING)
 
     def __str__(self):
         return f'{self.account.username}_{self.pk}'
