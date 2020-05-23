@@ -26,7 +26,8 @@ class PaymentForm(forms.ModelForm):
 class TransferForm(forms.ModelForm):
     def __init__(self, user, from_str, to_str, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['from_balance'].queryset = Balance.objects.filter(account=user, currency=from_str)
+        self.fields['from_balance'].queryset = Balance.objects.filter(
+            account=user, currency=from_str)
         self.fields['to_balance'].queryset = Balance.objects.filter(account=user, currency=to_str)
 
     class Meta:
