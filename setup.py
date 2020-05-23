@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="bsuir_2020_python",
-    version="0.0.4",
+    version="0.0.6",
     author="Dmitriy Klebanov",
     author_email="dmitriy.klebanov@gmail.com",
     description="BSUIR labs package",
@@ -19,5 +19,5 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    python_requires='>=3.8',
+    python_requires='>=3.7',
 )
