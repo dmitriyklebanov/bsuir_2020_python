@@ -27,6 +27,7 @@ def create_balances():
 def login(client, user):
     client.login(username=user.username, password=USER_PASSWORD)
 
+
 @pytest.mark.django_db
 class TestBalanceViews:
     def test_balance_list_view(self, create_balances):
@@ -36,6 +37,31 @@ class TestBalanceViews:
 
         response = client.get(url)
         assert response.status_code == 200
+
+    def test_balance_list_view_content(self, create_balances):
+        url = reverse('balance_list')
+        client, user, _, _, _ = create_balances
+        login(client, user)
+
+        response = client.get(url)
+        assert response.status_code == 200
+        assert 'balance1' in str(response.content)
+        assert 'balance2' not in str(response.content)
+
+    def test_balance_create_view_content(self, create_balances):
+        url = reverse('balance_create')
+        client, user, _, _, _ = create_balances
+        login(client, user)
+
+        balance = {
+            'amount': 42,
+            'name': 'test',
+            'currency': 'USD',
+        }
+
+        response = client.post(url, balance)
+        assert response.status_code == 302
+        assert Balance.objects.filter(name='test').count() == 1
 
     @pytest.mark.parametrize("balance, status_code", [
         (1, 200),
@@ -48,6 +74,22 @@ class TestBalanceViews:
         url = reverse('balance_detail', kwargs={'pk': balance.id})
         response = client.get(url)
         assert response.status_code == status_code
+
+    @pytest.mark.parametrize("amount, status_code", [
+        (324234, 200),
+        (42, 200)])
+    def test_balance_update_view(self, create_balances, amount, status_code):
+        client, user, _, balance, _ = create_balances
+        login(client, user)
+
+        url = reverse('balance_update', kwargs={'pk': balance.id})
+        response = client.post(url, {'amount': amount})
+        assert response.status_code == status_code
+        balance = Balance.objects.get(name='balance1')
+        if status_code == 302:
+            assert balance.amount == amount
+        else:
+            assert balance.amount == BALANCE_AMOUNT
 
 
 @pytest.fixture()
@@ -89,5 +131,6 @@ class TestPaymentViews:
         balance = Balance.objects.get(name='balance1')
         if amount <= BALANCE_AMOUNT:
             assert balance.amount == pytest.approx(float(BALANCE_AMOUNT - amount))
+            assert Payment.objects.filter(title='test').count() == 1
         else:
             assert balance.amount == pytest.approx(BALANCE_AMOUNT)
