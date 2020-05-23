@@ -12,6 +12,11 @@ from finance.models import Balance, Expense, Payment, Transfer
 
 from .currency import get_currency_rate
 
+import logging
+
+
+logger = logging.getLogger('django')
+
 
 class UsersCreateView(LoginRequiredMixin, CreateView):
     template_name = 'finance/form.html'

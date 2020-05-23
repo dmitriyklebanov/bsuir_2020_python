@@ -162,3 +162,43 @@ EMAIL_HOST_PASSWORD = os.environ.get('FM_EMAIL_PASSWORD')
 ACCOUNT_ACTIVATION_DAYS = 2
 ACTIVATION_EMAIL_BODY = 'accounts/registration/activation_email/body.txt'
 ACTIVATION_EMAIL_SUBJECT = 'accounts/registration/activation_email/subject.txt'
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'logs/debug.log',
+            'formatter': 'verbose'
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'file'],
+            'propagate': True,
+        },
+        'django.request': {
+            'handlers': ['file'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+    }
+}
