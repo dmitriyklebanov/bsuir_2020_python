@@ -4,6 +4,9 @@
 __pycache__/
 .pytest_cache/
 .coverage
+build/
+dist/
+bsuir_2020_python.egg-info/
 
 logs/*
 /media/*
