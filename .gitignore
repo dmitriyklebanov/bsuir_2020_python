@@ -8,6 +8,6 @@ build/
 dist/
 bsuir_2020_python.egg-info/
 
-logs/*
+logs/
 /media/*
 !/media/default/
