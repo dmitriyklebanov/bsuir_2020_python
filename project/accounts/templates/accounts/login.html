@@ -19,7 +19,12 @@
         </form>
         <div class="border-top pt-3">
             <small class="text-muted">
-                Don't Have An Account? <a class="ml-2" href="{% url 'registration_register' %}">Sign Up Now</a>
+                <div>
+                    Don't Have An Account? <a class="ml-2" href="{% url 'registration_register' %}">Sign Up Now</a>
+                </div>
+                <div>
+                    Forgot password? <a class="ml-2" href="{% url 'password_reset_request' %}">Reset Password</a>
+                </div>
             </small>
         </div>
     </div>
