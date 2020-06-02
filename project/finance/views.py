@@ -159,7 +159,7 @@ class PaymentDetailView(UsersDetailView):
 
 class PaymentUpdateView(UsersUpdateView):
     model = Payment
-    fields = ['title', 'description', 'expense']
+    fields = ['name', 'description', 'expense']
 
 
 class PaymentDeleteView(UsersDeleteView):

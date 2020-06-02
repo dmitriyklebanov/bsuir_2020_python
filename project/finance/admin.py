@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from finance.models import Balance, Expense, Payment
+from finance.models import Balance, Expense, Payment, Transfer
 
 admin.site.register(Balance)
 admin.site.register(Expense)
@@ -19,3 +19,4 @@ class PaymentAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Payment, PaymentAdmin)
+admin.site.register(Transfer)

@@ -12,7 +12,7 @@ class PaymentForm(forms.ModelForm):
 
     class Meta:
         model = Payment
-        fields = ['title', 'description', 'amount', 'balance', 'expense']
+        fields = ['name', 'description', 'amount', 'balance', 'expense']
 
     def clean(self, *args, **kwargs):
         cleaned_data = super().clean()

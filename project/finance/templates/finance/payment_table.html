@@ -17,7 +17,7 @@
                     <tr>
                         <td>{{ payment.datetime|date:"F d, Y" }}</td>
                         <td>{{ payment.datetime|date:"H:i" }}</td>
-                        <td><a href="{% url 'payment_detail' payment.id %}">{{ payment.title }}</a></td>
+                        <td><a href="{% url 'payment_detail' payment.id %}">{{ payment.name }}</a></td>
                         <td>{{ payment.amount }}</td>
                         <td><a href="{% url 'balance_detail' payment.balance.id %}">{{ payment.balance.name }}</a></td>
                         <td><a href="{% url 'expense_detail' payment.expense.id %}">{{ payment.expense.name }}</a></td>

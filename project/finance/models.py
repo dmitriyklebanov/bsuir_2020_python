@@ -51,7 +51,7 @@ class Expense(models.Model):
 class Payment(models.Model):
     account = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    title = models.CharField(max_length=30)
+    name = models.CharField(max_length=30)
     description = models.TextField(blank=True)
     datetime = models.DateTimeField(default=timezone.now)
     amount = models.FloatField(validators=[

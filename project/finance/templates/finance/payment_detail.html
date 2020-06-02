@@ -8,7 +8,7 @@
 {% block content %}
     <article class="content-section">
           <div>
-                <h2>Payment: {{ object.title }}</h2>
+                <h2>Payment: {{ object.name }}</h2>
                 <h5>Amount: <span class="text text-info">{{ object.amount }} <small class="text-muted">{{ object.balance.currency}}</small></span></h5>
                 <h5><small class="text-muted">From balance: </small><a class="text text-info" href="{% url 'balance_detail' object.balance.id %}">{{ object.balance.name }}</a></h5>
                 <h5><small class="text-muted">Expense: </small><a class="text text-info" href="{% url 'expense_detail' object.expense.id %}">{{ object.expense.name }}</a></h5>
