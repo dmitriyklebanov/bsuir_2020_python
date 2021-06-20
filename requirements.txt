@@ -6,7 +6,7 @@ chardet==3.0.4
 colorama==0.4.3
 confusable-homoglyphs==3.2.0
 coverage==5.1
-Django==3.0.6
+Django==3.1.12
 django-crispy-forms==1.9.1
 django-phone-field==1.8.0
 django-registration==3.1.2
