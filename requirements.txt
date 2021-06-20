@@ -9,7 +9,7 @@ coverage==5.1
 Django==3.0.6
 django-crispy-forms==1.9.1
 django-phone-field==1.8.0
-django-registration==3.1
+django-registration==3.1.2
 flake8==3.8.1
 idna==2.9
 importlib-metadata==1.6.0
